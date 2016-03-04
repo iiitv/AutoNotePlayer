@@ -1,5 +1,7 @@
 package com.iiitvstudents.music;
 
+import android.content.res.Resources;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,27 +45,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        try {
-            for (int i = 0; i <1000 ; i++) {
-                Sequencer sequencer= MidiSystem.getSequencer();
-                sequencer.open();
-                Sequence sequence=new Sequence(Sequence.PPQ,4);
-                Track track=sequence.createTrack();
-                ShortMessage a=new ShortMessage(144,1,44,100);
-                MidiEvent midion=new MidiEvent(a,1);
-                ShortMessage b=new ShortMessage(128,1,44,100);
-                MidiEvent midioff=new MidiEvent(b,20);
-                track.add(midion);
-                track.add(midioff);
-                sequencer.setSequence(sequence);
-                sequencer.start();
-            }
-
-        } catch (MidiUnavailableException e) {
-            e.printStackTrace();
-        } catch (InvalidMidiDataException e) {
-            e.printStackTrace();
-        }
+        MediaPlayer mediaPlayer;
         final ArrayList<NoteFrequency> notes=new ArrayList<>();
         addAllNotesFrequency(notes);
         AudioDispatcher dispatcher = AudioDispatcherFactorywithAEC.fromDefaultMicrophone(SAMPLE_RATE, BUFFER_SIZE, 0);
@@ -110,7 +92,10 @@ public class MainActivity extends AppCompatActivity {
                         TextView disp=(TextView)findViewById(R.id.textView);
                         disp.setText(""+notes.get(mid).note);
                         TextView text = (TextView) findViewById(R.id.textView11);
-                        text.setText("" +mean_data+"Hz");
+                        text.setText("" + mean_data + "Hz");
+                        int id = getResources().getIdentifier("note"+mid, "raw", getPackageName());
+                        MediaPlayer mediaPlayer=MediaPlayer.create(getApplicationContext(), id);
+                        mediaPlayer.start();
                         /*osc.setFreq((int) mean_data+1);
                         textHz.setText(""+mean_data);
                         seekFreq.setProgress(osc.getFreq() - Oscillator.MIN_FREQUENCY);*/
