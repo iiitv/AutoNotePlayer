@@ -26,14 +26,7 @@ import be.tarsos.dsp.io.android.AudioDispatcherFactory;
 import be.tarsos.dsp.pitch.PitchDetectionHandler;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
 import be.tarsos.dsp.pitch.PitchProcessor;
-import jp.kshoji.javax.sound.midi.InvalidMidiDataException;
-import jp.kshoji.javax.sound.midi.MidiEvent;
-import jp.kshoji.javax.sound.midi.MidiSystem;
-import jp.kshoji.javax.sound.midi.MidiUnavailableException;
-import jp.kshoji.javax.sound.midi.Sequence;
-import jp.kshoji.javax.sound.midi.Sequencer;
-import jp.kshoji.javax.sound.midi.ShortMessage;
-import jp.kshoji.javax.sound.midi.Track;
+
 
 public class MainActivity extends AppCompatActivity {
     public static final int no_samples=4;
@@ -91,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         TextView disp=(TextView)findViewById(R.id.textView);
                         disp.setText(""+notes.get(mid).note);
-                        TextView text = (TextView) findViewById(R.id.textView11);
+                        TextView text = (TextView) findViewById(R.id.textView1);
                         text.setText("" + mean_data + "Hz");
                         int id = getResources().getIdentifier("note"+mid, "raw", getPackageName());
                         MediaPlayer mediaPlayer=MediaPlayer.create(getApplicationContext(), id);
